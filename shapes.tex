@@ -1,0 +1,64 @@
+\tikzset{
+%    box/.style={draw,%
+%        inner sep=\myinnersep,%
+%        outer sep=0,%
+%    minimum width=5mm,%
+%    minimum height=\heightof{Cap}+2*\myinnersep*1mm,%
+%    align=center},
+    database/.style={
+      cylinder,
+      cylinder uses custom fill,
+      %cylinder body fill=green!5,
+      %cylinder end fill=green!5,
+      shape border rotate=90,
+      aspect=0.25,
+      inner sep=0.2cm,
+      draw
+    },
+  multidocument/.style={
+    shape=tape,
+    draw,
+    fill=white,
+    tape bend top=none,
+    double copy shadow},
+  manual input/.style={
+    shape=trapezium,
+    draw,
+    shape border rotate=90,
+    trapezium left angle=90,
+    trapezium right angle=80}
+}
+
+
+\makeatletter
+\pgfdeclareshape{document}{
+	\inheritsavedanchors[from=rectangle] % this is nearly a rectangle
+	\inheritanchorborder[from=rectangle]
+	\inheritanchor[from=rectangle]{center}
+	\inheritanchor[from=rectangle]{north}
+	\inheritanchor[from=rectangle]{south}
+	\inheritanchor[from=rectangle]{west}
+	\inheritanchor[from=rectangle]{east}
+	% ... and possibly more
+	\backgroundpath{% this is new
+		% store lower right in xa/ya and upper right in xb/yb
+		\southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+		\northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+		% compute corner of ‘‘flipped page’’
+		\pgf@xc=\pgf@xb \advance\pgf@xc by-10pt % this should be a parameter
+		\pgf@yc=\pgf@yb \advance\pgf@yc by-10pt
+		% construct main path
+		\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+		\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+		\pgfpathclose
+		% add little corner
+		\pgfpathmoveto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+		\pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+		\pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+	}
+}
+\makeatother
