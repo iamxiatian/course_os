@@ -97,19 +97,28 @@
 
 \begin{frame}[fragile]{存储器的层次结构}
   \begin{center}
-    \begin{tikzpicture}[c/.style={draw,thick, minimum height=0.75cm},
+    \begin{tikzpicture}[c/.style={draw,thick, minimum height=0.75cm, fill=red!5},
       a/.style={thick, -Latex}]
-      \draw[] node[c, minimum width=2cm] (cpu) {CPU} 
+      \draw[] node[c, minimum width=2cm] (cpu) {Registers} 
       node[c, below=0.5 of cpu, minimum width=3cm] (cache) {Cache} 
-      node[c, below=0.5 of cache, minimum width=4cm] (ram) {RAM}
-      node[c, below=0.5 of ram, minimum width=5cm] (disk) {DISK}
+      node[c, below=0.5 of cache, minimum width=4cm] (ram) {Main memory}
+      node[c, below=0.5 of ram, minimum width=5cm] (ssd) {Solid-state disk}
+      node[c, below=0.5 of ssd, minimum width=6cm] (cipan) {magnetic disk}
+      node[c, below=0.5 of cipan, minimum width=7cm] (guangpan) {optical disk}
+      node[c, below=0.5 of guangpan, minimum width=8cm] (cidai) {magnetic tapes}
       ;
       \path[a,color=blue, fill=blue] (cpu.240) edge (cache.120)
       (cache.240) edge (ram.120) 
-      (ram.240) edge (disk.120) ;
+      (ram.240) edge (ssd.120) 
+      (ssd.240) edge (cipan.120) 
+      (cipan.240) edge (guangpan.120) 
+      (guangpan.240) edge (cidai.120) ;
       \path[a, color=red, fill=red]  (cache.70) edge (cpu.-70)
       (ram.70) edge (cache.-70)
-      (disk.70) edge (ram.-70);
+      (ssd.70) edge (ram.-70)
+      (cipan.70) edge (ssd.-70)
+      (guangpan.70) edge (cipan.-70)
+      (cidai.70) edge (guangpan.-70);
     \end{tikzpicture}
   \end{center}
 \end{frame}
