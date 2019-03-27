@@ -1677,20 +1677,31 @@ end
 
 \subsection{2.7 线程}
 \begin{frame}[fragile]{2.7 线程}
-  \begin{easylist} \easyitem
 
+  \begin{easylist} \easyitem
+    & Single and Multithreaded Processes    
   \end{easylist}
+
+  \includegraphics[width=0.9\textwidth]{figure/thread_single_vs_multi.png}
 \end{frame}
 
 
-
-\begin{frame}[fragile]{2.7.1 线程的基本概念(1)}
+\begin{frame}[fragile]
+  \frametitle{2.7.1 线程的的基本概念(1)}
+  1. 线程的优势：
   \begin{easylist} \easyitem
-    & 1.线程的引入
+    & 响应速度(Responsiveness)
     && 减少并发执行时的时空开销，进程的创建、撤消、切换较费时空，因它既是调度单位，又是资源拥有者。
-    && 线程是系统独立调度和分派的基本单位，其基本上不拥有系统资源，只有少量资源（寄存器，栈…），但共享其所属进程所拥有的全部资源。
+
+    & 资源共享(Resource Sharing)
+    && 线程是系统独立调度和分派的基本单位，其基本上不拥有系统资源，只有少量资源
+    （寄存器，栈…），但共享其所属进程所拥有的全部资源。
+    
+    & 充分利用多核/多处理器的硬件性能
+    (Utilization of MP \& Multicore Architectures)
   \end{easylist}
 \end{frame}
+
 
 \begin{frame}[fragile]{2.7.1 线程的基本概念(2)}
   \begin{easylist} \easyitem
@@ -1717,7 +1728,62 @@ end
   \end{easylist}
 \end{frame}
 
-\begin{frame}[fragile]{2.7.2 线程的同步和通信}
+\begin{frame}[fragile]
+  \frametitle{2.7.2 线程的类型}
+  \begin{easylist}
+  & 用户线程(User-level thread)
+  && Thread management done by user-level threads library
+
+  && 三种常见的用户线程
+  &&& POSIX Pthreads
+  &&& Win32 threads
+  &&& Java threads
+  
+  & 内核线程(Kernel-Level Thread)
+  && Supported by the Kernel
+  &&& Windows XP/2000 ...
+  &&& Linux
+  &&& Mac OS X
+  \end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{用户线程向内核线程的映射}
+  目的：把用户线程转换为内核线程，从而由操作系统调度执行
+  \begin{easylist}
+    & Many to One
+    && Solaris Green Threads
+    && GNU Portable Threads
+
+    & One to One
+    && Windows
+    && Linux
+    && Solaris 9 and later
+    
+    & Many to Many
+    && Solaris prior to version 9
+    && Windows NT/2000 with the ThreadFiber package
+  \end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Many-to-one Model}
+  \includegraphics[width=0.9\textwidth]{figure/thread_many2one.png}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{One-to-one Model}
+  \includegraphics[width=0.9\textwidth]{figure/thread_one2one.png}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Many-to-Many Model}
+  \includegraphics[width=0.9\textwidth]{figure/thread_many2many.png}
+\end{frame}
+
+\begin{frame}[fragile]{2.7.3 线程的同步和通信}
   \begin{easylist} \easyitem
     & 1.互斥锁
     && 阻塞方式 \\
@@ -1731,7 +1797,7 @@ end
   \end{easylist}
 \end{frame}
 
-\begin{frame}[fragile]{2.7.2 线程的同步和通信}
+\begin{frame}[fragile]{2.7.3 线程的同步和通信}
   \begin{easylist} \easyitem
     & 2.条件变量
     && 用于线程的长期等待
