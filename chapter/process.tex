@@ -1171,10 +1171,10 @@ var RN integer;
 
 \begin{frame}[fragile, allowframebreaks]{写者优先(采用类Java/C伪代码)}
 \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=c]
-semaphore fmutex=1, rdcntmutex=1, wtcntmutex=1, queue=1;
-//fmutex --> access to file;
-// rdcntmutex --> access to readcount
-//wtcntmutex --> access to writecount
+Semaphore fmutex=1, rdcntmutex=1, wtcntmutex=1, queue=1;
+//fmutex: access to file;
+// rdcntmutex: access to readcount
+//wtcntmutex: access to writecount
 int readcount = 0, writecount = 0;
 
 void reader(){
@@ -1186,7 +1186,7 @@ void reader(){
         signal(rdcntmutex);
         signal(queue);
 
-        //Do read operation ...
+        //reading ...
 
         wait(rdcntmutex);
         readcount = readcount - 1;
@@ -1203,7 +1203,7 @@ void writer(){
         signal(wtcntmutex);
 
         wait(fmutex);
-        //Do write operation ...
+        //writing ...
         signal(fmutex);
 
         wait(wtcntmutex);
