@@ -421,7 +421,8 @@
 \begin{frame}[fragile]{最早截止时间优先EDF例}
   \begin{center}
     \begin{tikzpicture}[c/.style={draw,thick, fill=red!5, minimum width=2cm, minimum height=0.75cm}]
-      \draw[] node (label1){任务执行} node[c,right=of label1] (n1) {1} node[c, right=0 of n1] (n3) {3} node[c, right=0 of n3] (n4) {4} node[c, right=0 of n4] (n2) {2};
+      \coordinate (n) at (0,0);
+      \draw[left=1.5 of n] node (label1){任务执行} node[c,right=1 of n] (n1) {1} node[c, right=0 of n1] (n3) {3} node[c, right=0 of n3] (n4) {4} node[c, right=0 of n4] (n2) {2};
       \draw[very thick, -Latex] (n1.south) ++(-2,0)--++(10,0) node[right]{$t$};
       \draw[] node[above=0.5 of label1, xshift=0.35cm]{开始截止时间} node[below=of label1]{任务到达};
       \draw[thick,->] (n1.north) -- ++(0,1) node[above] {1};
@@ -429,10 +430,10 @@
       \draw[thick,->] (n4.north) -- ++(0,1) node[above] {4};
       \draw[thick,->] (n2.north) -- ++(0,1) node[above] {2};
 
-      \draw[thick,<-, blue] (n1.south) ++(-0.5,0)-- ++(0,-1) node[below] {1};
-      \draw[thick,<-, blue] (n1.south) ++(0.3,0)-- ++(0,-1) node[below] {2};
-      \draw[thick,<-, blue] (n1.south) ++(0.8,0)-- ++(0,-1) node[below] {3};
-      \draw[thick,<-, blue] (n3.south)-- ++(0,-1) node[below] {4};
+      \draw[thick,<-, blue] (n.south) ++(1,-0.5)-- ++(0,-1) node[below] {1};
+      \draw[thick,<-, blue] (n.south) ++(1.8,-0.5)-- ++(0,-1) node[below] {2};
+      \draw[thick,<-, blue] (n.south) ++(2.5,-0.5)-- ++(0,-1) node[below] {3};
+      \draw[thick,<-, blue] (n.south) ++(4.5,-0.5) -- ++(0,-1) node[below] {4};
     \end{tikzpicture}
 
     EDF算法用于非抢占调度方式
