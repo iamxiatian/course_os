@@ -2,6 +2,12 @@
 
 面向信息管理学科的操作系统（Operating System）课程讲义
 
+## 课件编译：
+
+```sh
+xelatex.exe -shell-escape os
+```
+
 ## 编译后的课件：
 
 - [引言](./pdf/ch1.pdf)

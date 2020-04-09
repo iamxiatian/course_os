@@ -22,7 +22,7 @@
 
     \includegraphics[width=0.8\textwidth]{figure/matrix.png}
     
-    && The Matrix itself is a computer program that we (the humans)
+    && \scriptsize The Matrix itself is a computer program that we (the humans)
     "live" in. It was built by the robots of the future in the great war between
     the humans and robots. The robots designed the matrix so that we would think
     that everything with the world is all right.
@@ -63,12 +63,28 @@
     & 应用软件: 解决各种实际问题
     && 通用应用软件，如文字处理软件、电子表格软件等
     && 定制的应用软件
+    & 介于二者之间的中间件
+    && Web中间件：HTTPD, Nginx, Lighttpd; Tomcat, Jetty,Resin
+    && 消息中间件：Kafka, ActiveMQ ...
+    && 各种业务中间件 ...
   \end{easylist}
 \end{frame}
 
-\begin{frame}[fragile]{操作系统}
+\begin{frame}[fragile, plain]{~}
   \begin{center}
-    \includegraphics[width=0.8\textwidth]{figure/OPERATING-SYSTEM.jpg}
+    桌面OS：
+    
+    \includegraphics[width=0.8\textwidth]{figure/mac-win-linux.png}
+
+    手机、平板等移动设备OS：
+    
+    \includegraphics[width=0.6\textwidth]{figure/apple_quarreling_with_android.jpg}    
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Windows Family}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figure/windows-history.jpg}
   \end{center}
 \end{frame}
 
@@ -80,7 +96,7 @@
     & Apple
     && iOS
     & 主要IT软件厂商多有涉足:
-    && IBM, Oracle(Sun), Redhat，Google, Alibaba…
+    && IBM, Oracle(Sun\footnote{2009年4月20日甲骨文以74亿美元现金收购Sun微系统公司。}), Redhat\footnote{2018年10月29日早晨，IBM宣布以340亿美元的价格收购Red Hat。}，Google, Alibaba, 鸿蒙…
     && AIX, Solaris, Android, FreeBSD, SuSE, Ubuntu…
     & Virtual Machine
     && VMwareWorkstation
@@ -91,13 +107,12 @@
 
 \begin{frame}[fragile]{为什么学习操作系统}
   \begin{easylist} \easyitem
-    & 智者的挑战
-     & 操作系统已经深入到我们生活中的方方面面
+    & 操作系统已经深入到我们生活中的方方面面
     && 存在人们意识不到的大量“操作系统”%（如:嵌入式系统－家电、手机）
-    \includegraphics[width=0.6\textwidth]{figure/yunos.png}
+    \includegraphics[width=0.5\textwidth]{figure/yunos.png}
     & 优秀程序员必不可少的基础知识
     && 加深对操作系统的理解，有利于深入编程；用户为了开发应用程序必须与操作系统打交道
-    && 编程时借鉴操作系统的设计思想和算法（比如插件开发、微内核）
+    && 借鉴操作系统的设计思想和算法（插件、微内核）
     && 设计操作系统或者修改现有的系统
     && Switch 和 If，哪个效率更高？
   \end{easylist}
@@ -110,7 +125,7 @@
     优先…）
     & 可以提高情商 :)
 	  \begin{tcolorbox}[colback=green!5,colframe=green!50,title=What's the meaning?]
-		me\@me-desktop:~\$ chmod 700 myfate \\
+		me@my-desktop:\~ \$ chmod 700 myfate \\
 		  Permission denied 
 	  \end{tcolorbox}
 
@@ -156,33 +171,31 @@
 
 \begin{frame}[fragile]{参考书目}
   \begin{easylist} \easyitem
-    & 汤子瀛等，《计算机操作系统》，西安电子科技大学 ✿✿✿✿
+    & 汤小丹, 汤子瀛等. 《计算机操作系统(第4版)》, 西安电子科技大学 
     && 附带学习指导与题解
-    & 孙钟秀，《操作系统教程》第三版，高等教育出版社
+    & 张尧学等.《计算机操作系统教程（第4版）》,清华大学出版社
     & 操作系统精髓与设计原理
-    & Silberschatz，《操作系统概念》（中、英文）第六版，高等教育出版社
+    & Silberschatz，《操作系统概念》（中、英文）第9版，高等教育出版社
   \end{easylist}
 \end{frame}
 
 
 \begin{frame}[fragile]{推荐阅读}
   \begin{easylist} \easyitem
-    & 深入理解计算机系统，机械工业出版社  ✿✿✿✿✿
-    & 操作系统之哲学原理✿✿✿
+    & 深入理解计算机系统，机械工业出版社
+    & 操作系统之哲学原理
     & 鸟哥的Linux私房菜
-    & 深入理解计算机系统
+    & 现代操作系统（原书第4版）,机械工业出版社
   \end{easylist}
 \end{frame}
 
 
-\begin{frame}[fragile]{考核方式}
+\begin{frame}[fragile]{问题交流}
   \begin{easylist} \easyitem 
-    & 考核形式：
-    && 闭卷+A4总结内容
     & 问题交流：
-    && 课间
-    && 电子邮件 
-    && 办公室311/9:00AM---11:00AM, Monday
+    && 课堂交流（可随时留言）
+    && 微信群
+    && 助教：梁艺耀
   \end{easylist}
 \end{frame}
 
@@ -192,6 +205,8 @@
     & 如果让你设计一个操作系统:
     && 你想到的功能都有哪些?请列举主要方面。
     && 你觉得未来的操作系统会往哪些方面发展/你最期待的功能是什么？
+    && 一刻钟后发到留言部分
+    & 调查有哪些操作系统，把LOGO和名称发到群里面。
   \end{easylist}
 \end{frame}
 
@@ -266,7 +281,7 @@
     & 魔幻家
     && 差的东西变好：不用直接与硬件指令打交道，如磁盘的控制管理
     && 少得东西变多：虚拟内存
-    && 无中生有：如逻辑盘
+    && 无中生有：如逻辑盘， WPS网盘
     & 管理者
     && CPU管理
     && 内存管理
@@ -630,6 +645,28 @@
 \end{frame}
 
 
+\begin{frame}[fragile]
+  \frametitle{云操作系统}
+  云计算是一种新兴的IT资源的交付和使用方式，通过网络以按需、易于扩展的方式获得所
+  需资源。提供资源的网络称为“云”。
+
+  云操作系统COS就是对云进行管理的操作系统
+
+  \includegraphics[width=0.8\textwidth]{figure/cos/arch.png}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{IaaS, PaaS, SaaS}
+  \includegraphics[width=0.8\textwidth]{figure/cos/iaas.png}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{IaaS, PaaS, SaaS}
+  \includegraphics[width=0.8\textwidth]{figure/cos/iaas2.png}
+\end{frame}
+
+
 \begin{frame}[fragile]{操作系统的演变}
 \begin{center}
   \includegraphics[width=0.9\textwidth]{figure/intro-unix_history-simple.png}
@@ -856,8 +893,3 @@
     % http://superuser.com/questions/144666/what-is-the-difference-between-shell-console-and-terminal
   \end{easylist}
 \end{frame}
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../os"
-%%% End:

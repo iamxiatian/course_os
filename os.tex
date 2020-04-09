@@ -1,273 +1,67 @@
-\documentclass[table, t,13pt]{beamer} 
-\usepackage{graphicx}
-\usepackage{xeCJK,fontspec,xunicode,xltxtra, fancybox}
+\documentclass[table, 13pt, slidestop,compress,mathserif]{beamer}
 
-%\usepackage[timeinterval=1]{tdclock}
-%box tools
-\usepackage{framed, color}
-\usepackage{colortbl, booktabs, multirow, makecell, longtable}
-\usepackage{animate}
-
-\usepackage{soul} %for strikeout
-
-\usepackage{amsmath, amsfonts, amssymb} %amssymb for varnothing symbol
-\usepackage[thicklines]{cancel} %公式中通过斜线删除部分内容
-\usepackage[b]{esvect} %vector
-
-\usepackage{tcolorbox}
-\tcbset{colback=white,colframe=orange!60,fonttitle=\bfseries,
-coltitle=black}
-
-\usepackage{caption, algorithm}
-\usepackage[noend]{algpseudocode}
-
-\usepackage{textpos}
-\usepackage{tikz, flowchart} % tikz绘图
+\usepackage[UTF8, zhmap = true]{ctex} %增加中文处理
+\usepackage{tikz} %绘图命令
+\usepackage{pgfplots}
+\usetikzlibrary{decorations.pathmorphing} 
 \usetikzlibrary{decorations.pathreplacing}
 \usetikzlibrary{decorations.markings}
-\usetikzlibrary{calc, arrows, arrows.meta, shapes, shapes.geometric, positioning}
+\usetikzlibrary{calc, arrows, arrows.meta, shapes, shadows,  shapes.geometric, positioning}
 \usetikzlibrary{topaths}
 \usetikzlibrary{mindmap}
 \usetikzlibrary{matrix}
-\usetikzlibrary{shadings}
-\usetikzlibrary{shadows}
-\usetikzlibrary{tikzmark}
-
-\pgfmathsetmacro{\myinnersep}{2}% inner sep in mm
-\include{shapes}
-
-\usepackage{pgfplots}
-\usepgfplotslibrary{external}  %缓存tikz的结果
-\tikzset{
-    external/system call={%
-    xelatex \tikzexternalcheckshellescape
-    -halt-on-error -interaction=batchmode --shell-escape
-    -jobname "\image" "\texsource"}}
-%\tikzexternalize
-
-
-\usepackage[tikz]{bclogo}  %see http://mirrors.ctan.org/graphics/bclogo/README
-\DeclareGraphicsRule{.mps}{eps}{*}{} %解决xelatex处理bclogo时的mps问题
-\newcommand{\infobox}[2]{ 
-    \begin{bclogo}[couleur=yellow!10, logo=\bcfleur, ombre=true]{#1}
-    #2
-    \end{bclogo}
-}
-\newcommand{\warnbox}[2]{ 
-    \begin{bclogo}[couleur=yellow!10, logo=\bctakecare, ombre=true]{#1}
-    #2
-    \end{bclogo}
-}
-\newcommand{\kpt}{{\color{red}$\ast$}}
-
-
-%\usetheme[height=8mm]{Madrid} % Favorite theme is Madrid! 
-%\usecolortheme[RGB={130,120,232}]{structure} 
-%\usetheme{Boadilla} 
-%\usecolortheme{default} 
-
-\usetheme{Madrid} 
-\usecolortheme{crane} 
-
-\setbeamertemplate{items}[ball] 
-\setbeamertemplate{blocks}[rounded][shadow=true] 
-
-%\setmainfont[Mapping=tex-text,LetterSpace=-1.25]{Ubuntu Light}
-%\setsansfont[Mapping=tex-text,LetterSpace=-1.25]{Ubuntu Light}
-\setmonofont[Color=00663300]{Ubuntu Light}
-
-\setCJKmainfont{FZLanTingHeiS-EL-GB} %方正字体，也可以改成：微软雅黑
-\setCJKsansfont{FZLanTingHeiS-EL-GB} 
-%\setCJKmainfont{微软雅黑} 
-%\setCJKsansfont{微软雅黑} 
-\setCJKmonofont{Consolas}
-
-\usefonttheme[onlymath]{serif}
-
-
-%\setmainfont[Mapping=tex-text,LetterSpace=-1.25]{Neo Euler}
-%\setsansfont[Mapping=tex-text,LetterSpace=-1]{Ubuntu}
-%\setmonofont[Color=00663300]{Neo Euler}
-
-
-\definecolor{red(ncs)}{rgb}{0.77, 0.01, 0.2}
-\definecolor{champagne}{rgb}{0.97, 0.91, 0.81}
-\definecolor{coolblack}{rgb}{0.0, 0.18, 0.39}
-\definecolor{vanilla}{rgb}{0.95, 0.9, 0.67}
+\usepackage{tcolorbox}
+\tcbset{colback=white,colframe=orange!60,fonttitle=\bfseries, coltitle=black}
 
 \usepackage[ampersand]{easylist}
-\newcommand\easyitem{\ListProperties(Hide=100, Hang=true, Progressive=3ex,
+\newcommand\easyitem{\ListProperties(
+  Hide=100, Hang=true, Progressive=1ex,
   Style*=\color{orange}$\bullet$ ,
   Style2*=\color{orange}$\ast$ ,
   Style3*=\color{orange}$\circ$ ,
-  Style4*=\tiny$\blacksquare$, Space=-.5em, Space*=-.5em)}
+  Style4*=\tiny$\blacksquare$, Space=-.1em, Space*=-.1em)}
 
-\setbeamertemplate{itemize item}{\color{orange}$\bullet$}
-\setbeamertemplate{itemize subitem}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
-\setbeamertemplate{itemize subsubitem}{\tiny\raise1.5pt\hbox{\donotcoloroutermaths$\blacktriangleright$}}
-\setbeamertemplate{enumerate item}{\insertenumlabel.}
-\setbeamertemplate{enumerate subitem}{\insertenumlabel.\insertsubenumlabel}
-\setbeamertemplate{enumerate subsubitem}{\insertenumlabel.\insertsubenumlabel.\insertsubsubenumlabel}
-\setbeamertemplate{enumerate mini template}{\insertenumlabel}
+\usepackage{minted} %compile： lualatex/xelatex -shell-escape spark.tex
+\setminted{encoding=utf-8} %注意字体，如果设置了CJKmonofont，会出现乱码
+%\setminted{fontsize=\footnotesize}
+\setminted{tabsize=4}
+\usemintedstyle{tango}
 
-\parskip=3mm
-\parindent=15pt
-\linespread{1.1}
+% 设置字体信息
+\usepackage[T1]{fontenc}
+\usepackage{Alegreya}
 
+% 设置行间距
+\linespread{1.35}
 
-%自定义的一些命令，方便使用
-\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
-  \node[shape=circle,draw,inner sep=1.5pt] (char) {#1};}}
+% 设置logo
+\logo{\includegraphics[height=1cm,width=1cm]{ruc_logo.png} }
 
-
-%\newcommand*{\hei}{\fontfamily{FZLanTingHeiS-H-GB}\selectfont}
-%\DeclareTextFontCommand{\texthei}{\hei}
-
-\setCJKfamilyfont{FZHei}{FZLanTingHeiS-R-GB}  
-\newcommand{\cjkbold}{\color[rgb]{0.29, 0.0, 0.51} \CJKfamily{FZHei}}  %http://latexcolor.com/
-
-\setCJKfamilyfont{FZHeiR}{FZLanTingHeiS-R-GB}  
-\newcommand{\cjkem}{\CJKfamily{FZHeiR}} 
-
-\renewcommand{\em}[1]{\color{red} #1}
-
-\XeTeXlinebreaklocale "zh"  
-\XeTeXlinebreakskip = 0pt plus 1pt 
-
-\usepackage{listings}
-
-\lstset{breakatwhitespace,
-  backgroundcolor=\color{white},
-  columns=fullflexible,
-  breaklines,
-  showtabs=true,
-  tabsize=4,
-  keepspaces=true,
-  extendedchars=true}
-
-\newenvironment{btHighlight}[1][]
-{\begingroup\def\bt@Highlight@par{#1}\begin{lrbox}{\@tempboxa}}
-{\end{lrbox}\bt@HL@box[\bt@Highlight@par]{\@tempboxa}\endgroup}
-
-\newcommand\btHL[1][]{%
-\begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
-}
-\def\bt@HL@endenv{%
-\end{btHighlight}%   
-\egroup
-}
-\newcommand{\bt@HL@box}[2][]{%
-  $\overset{\text{#1}}{\overbrace{\strut\usebox{#2}}}$%
-}
-
-\lstdefinelanguage{Scala}{
-    morekeywords={class,object,trait,extends,with,new,if,while,for,def,val,var,this, implicit},
-    otherkeywords={->,=>},
-    sensitive=true,
-    morecomment=[l]{//},
-    morecomment=[s]{/*}{*/},
-    morestring=[b]',
-    morestring=[b]"
-}
-
-\lstdefinestyle{Java}{
-    language={Java},basicstyle=\ttfamily, 
-    moredelim=**[is][{\btHL[class name]}]{`}{`},
-    moredelim=**[is][{\btHL[important]}]{@}{@},
-    escapechar={§},
-}
-
-
-\hypersetup{
-  pdftitle={Learning Scala},
-  pdfsubject={Scala},
-  pdfkeywords={Scala},
-  pdfproducer={LaTeX},
-  pdfcreator={XeLaTeX}
-}
-
-
-\usepackage{tcolorbox}
-\tcbset{colback=white,colframe=orange!60,fonttitle=\bfseries,
-coltitle=black}
-
-
-%\setbeamercolor{title}{bg=red(ncs), fg=white}
-%\setbeamercolor{frametitle}{fg=red(ncs),bg=gray!10!white}
-\setbeamercolor{title}{fg=coolblack, bg=orange!30}
-\setbeamercolor{frametitle}{fg=coolblack, bg=vanilla!0}
-
-\setbeamercolor{palette primary}{fg=black, bg=gray!15!white}
-\setbeamercolor{palette secondary}{fg=black, bg=gray!10!white}
-\setbeamercolor{palette tertiary}{fg=black, bg=gray!15!white}
-
-\addtobeamertemplate{frametitle}{}{%
-\begin{textblock*}{1.0\paperwidth}(-.001\textwidth,0cm)
-%\tikz{\draw[orange!70!yellow, line width=1.2] (-1cm,0cm) -- (0.5\textwidth,0cm);\draw[orange!70!yellow,yshift=-0.5] (0.5\textwidth,0cm) -- (0.7\textwidth,0cm);}
-\end{textblock*}
-\begin{textblock*}{100mm}(.85\textwidth,-1cm)
-\includegraphics[height=1.2cm,width=1.2cm]{ruc_logo.jpg}
-\end{textblock*}
-}
-
-%gets rid of bottom navigation bars
-\setbeamertemplate{footline}[page number]{}
-
-%gets rid of navigation symbols
-\setbeamertemplate{navigation symbols}{}
-
-\newcommand{\tabincell}[2]{
-  \begin{tabular}{@{}#1@{}}#2\end{tabular}
-}
+\title{操作系统}
+\author{Xia Tian }
+\institute{Renmin University of China }
 
 \begin{document}
 
-   %\logo{\includegraphics[width=1.0cm,height=1.0cm]{figure/ruc.jpg}}
-  \title{操作系统}
-  \author{Xia Tian }
-  \institute{Renmin University of China }
-  \date{\today{}}
-
-  \frame{\titlepage}
+\frame{\titlepage}
 
 %\include{chapter/introduction}
-%\include{chapter/process}
+\include{chapter/process}
 %\include{chapter/schedule}
-% \include{chapter/memory}
+%\include{chapter/memory}
 %\include{chapter/device}
-\include{chapter/file}
+% \include{chapter/file}
 
 %\begin{comment}
-\section{云操作系统}
-\begin{frame}[fragile]
-  \frametitle{云操作系统}
-  云计算是一种新兴的IT资源的交付和使用方式，通过网络以按需、易于扩展的方式获得所
-  需资源。提供资源的网络称为“云”。
-
-  云操作系统COS就是对云进行管理的操作系统
-
-  \includegraphics[width=0.8\textwidth]{figure/cos/arch.png}
-\end{frame}
-
-
-\begin{frame}[fragile]
-  \frametitle{IaaS, PaaS, SaaS}
-  \includegraphics[width=0.8\textwidth]{figure/cos/iaas.png}
-\end{frame}
-
-\begin{frame}[fragile]
-  \frametitle{IaaS, PaaS, SaaS}
-  \includegraphics[width=0.8\textwidth]{figure/cos/iaas2.png}
-\end{frame}
 
 %\end{comment}
 
-%\begin{comment}
+\begin{comment}
   \begin{frame}[fragile, allowframebreaks]
     \frametitle{展示作业}
     \begin{enumerate}
     \item 协程与进程
-    \item CPU与GPU
+    \item CPU、GPU、TPU
     \item 中国芯片发展状况
     \item 开源软件的发展历史和重要开源项目介绍
     \item 计算机存储系统的现状与发展趋势
@@ -281,7 +75,7 @@ coltitle=black}
     \item 操作系统扩展学习资料汇编 
     \end{enumerate}
   \end{frame}
-%\end{comment}
+\end{comment}
 
 \begin{frame}[fragile]
   \frametitle{致谢}

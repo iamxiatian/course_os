@@ -76,7 +76,7 @@
     & 特征
     && 间断性:
     &&& 如打印程序等待计算程序完成之后方可继续
-    &&& 执行—暂停—执行……
+    &&& 执行—暂停—执行......
     && 失去封闭性
     &&& 主要由共享资源引起，资源的状态将由多个程序改变；
     && 不可再现性
@@ -107,23 +107,24 @@
 
 
 \begin{frame}[fragile]{Python代码示例}
-  \begin{lstlisting}[keywordstyle=\color{red},basicstyle=\small, language=python]
+  \linespread{1} 
+  \begin{minted}{python}
 from multiprocessing import Process
 def f1(i):
-    while i<10:
-        i = i+1
-    print 'f1 finished‘
+  while i<10:
+    i = i+1
+  print 'f1 finished'
 
 def f2(i):
-    while i>-10:
-        i = i-1
-    print 'f2 finished!'
+  while i>-10:
+    i = i-1
+  print 'f2 finished!'
 
 
 if __name__=='__main__':
-    Process(target=f1, args=(0,)).start()
-    Process(target=f2, args=(0,)).start()
-\end{lstlisting}
+  Process(target=f1, args=(0,)).start()
+  Process(target=f2, args=(0,)).start()
+\end{minted}
 \end{frame}
 
 
@@ -415,11 +416,11 @@ if __name__=='__main__':
   \end{easylist}
 \end{frame}
 
-\begin{frame}[fragile]{Review last lesson}
-  \begin{easylist} \easyitem
-    & 什么是PCB，操作系统采用哪些方式对PCB进行组织和管理的？
-  \end{easylist}
-\end{frame}
+% \begin{frame}[fragile]{Review last lesson}
+%   \begin{easylist} \easyitem
+%     & 什么是PCB，操作系统采用哪些方式对PCB进行组织和管理的？
+%   \end{easylist}
+% \end{frame}
 
 \subsection{2.2 进程控制}
 \begin{frame}[fragile]{2.2 进程控制}
@@ -575,39 +576,41 @@ if __name__=='__main__':
 \end{frame}
 
 \begin{frame}[fragile]{生产者－消费者问题}
-  \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, numbers=none]
+  \begin{minted}{pascal}
 var n, integer;  //变量定义
-Type item=…;
-var buffer:array[0,1,…,n-1] of item;
-in, out: 0,1, …, n-1;
-counter: 0,1,…,n;
-    \end{lstlisting}
+Type item=...;
+var buffer:array[0,1,...,n-1] of item;
+in, out: 0,1, ... , n-1;
+counter: 0,1, ... , n;
+    \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{生产者－消费者问题}
   \begin{columns}[onlytextwidth,T]
     \begin{column}{0.48\textwidth}
-      \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+      \begin{minted}[fontsize=\footnotesize]{pascal}
 producer:
-repeat
-      produce an item in nextp;
-      …
-      while counter=n do no-op;
-      buffer[in]:=nextp;
-      in:=(in+1)mod n;
-      counter:=counter+1;
-until false; \end{lstlisting}
+  repeat
+    produce an item in nextp;
+    ...
+    while counter=n do no-op;
+    buffer[in]:=nextp;
+    in:=(in+1)mod n;
+    counter:=counter+1;
+  until false; 
+\end{minted}
     \end{column}
     \begin{column}{0.5\textwidth}
-      \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+      \begin{minted}[fontsize=\footnotesize]{pascal}
 consumer:
-repeat
-        while counter=0 do no-op;
-        nextc:=buffer[out];
-        out:=(out+1) mod n;
-        counter:=counter-1;
-        consumer the item in nextc;
-until false; \end{lstlisting}
+  repeat
+    while counter=0 do no-op;
+    nextc:=buffer[out];
+    out:=(out+1) mod n;
+    counter:=counter-1;
+    consumer the item in nextc;
+  until false; 
+    \end{minted}
     \end{column}
   \end{columns}
 \end{frame}
@@ -627,16 +630,18 @@ until false; \end{lstlisting}
 
   \begin{columns}[onlytextwidth,T]
     \begin{column}{0.4\textwidth}
-      \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, numbers=none]
+      \begin{minted}{pascal}
 register1:=counter;
 register1 :=register1+1;
-counter :=register1;    \end{lstlisting}
+counter :=register1;    
+      \end{minted}
     \end{column}
     \begin{column}{0.4\textwidth}
-      \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, numbers=none]
+      \begin{minted}{pascal}
 register2:=counter;
 register2:=register2-1;
-counter :=register2;      \end{lstlisting}
+counter :=register2;      
+      \end{minted}
     \end{column}
   \end{columns}
 
@@ -660,12 +665,13 @@ counter :=register2;      \end{lstlisting}
 && 退出区：将访问标志复位
   \end{easylist}
 
-  \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+  \begin{minted}{pascal}
 Repeat
-    Entry section
-    Critical section
-    Exit section
-Until false \end{lstlisting}
+  Entry section
+  Critical section
+  Exit section
+Until false 
+  \end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{4. 同步机制应遵循的准则}
@@ -705,40 +711,44 @@ Until false \end{lstlisting}
 & 1 整型信号量
 && 是一个整型量，通过2个{\color{red}原子操作}wait(s)和signal(s)来访问。
 && Wait(s):
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, numbers=none]
+\begin{minted}{pascal}
 while s<= 0 do no-op;
+
 s:=s-1;
-\end{lstlisting}
+\end{minted}
+
 && Signal(s):
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, numbers=none]
-s:=s+1;
-\end{lstlisting}
+    \begin{minted}{pascal}
+    s:=s+1;
+    \end{minted}
+
   \end{easylist}
 \end{frame}
 
 
 
 \begin{frame}[fragile]{2 记录型信号量}
+\linespread{1}
 \begin{columns}[onlytextwidth,T]
-    \begin{column}{0.6 \textwidth}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
-type  semaphore=record
-        value:integer;
-        L: list of process;
+    \begin{column}{0.6 \textwidth}    
+\begin{minted}{pascal}
+type semaphore=record
+    value:integer;
+    L: list of process;
 end
 procedure wait(s)
   var s: semaphore
   begin
-        s.value:=s.value - 1;
-        if s.value < 0 then block (s, L)
+    s.value:=s.value - 1;
+    if s.value < 0 then block (s, L)
   end
 procedure signal (s)
   var s:semaphone
   begin
-        s.value:=s.vaule + 1
-        if s.value<=0 then wakeup(s.L)
+    s.value:=s.vaule + 1
+    if s.value<=0 then wakeup(s.L)
   end
-\end{lstlisting}
+\end{minted}
 \end{column}
 \begin{column}{0.4\textwidth}
   \small
@@ -792,27 +802,27 @@ procedure signal (s)
 
 
 \begin{frame}[fragile]{3 AND型信号量}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
-Swait(s1,s2,…,sn)
-    if s1 >= 1 and … and sn >= 1 then
-        for i:=1 to n do si:=si-1; endfor
-    else
-        place the process in the waiting queue with the first si found    with si<1, and set the program count of this process to the beginning of swait operation
-    end if
+\begin{minted}{pascal}
+Swait(s1,s2,...,sn)
+  if s1 >= 1 and ... and sn >= 1 then
+    for i:=1 to n do si:=si-1; endfor
+  else
+    place the process in the waiting queue with the first si found with si<1, and set the program count of this process to the beginning of swait operation
+  end if
 
-Ssignal(s1,s2,…,sn)
-    for i:=1 to n do si:=si+1;
+Ssignal(s1,s2,...,sn)
+  for i:=1 to n do si:=si+1;
 
-    remove all the process waiting in the queue associated with si into the ready queue
+  remove all the process waiting in the queue associated with si into the ready queue
  endfor
-\end{lstlisting}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{4 信号量集}
   \begin{easylist} \easyitem
     & 某进程需要100个临界资源X时：
     && wait(x);
-    && ……
+    && ......
     && wait(x)
     & 有些情况下，只有系统空闲资源数量大于等于一定数值，才予以分配。
   \end{easylist}
@@ -836,32 +846,32 @@ Ssignal(s1,s2,…,sn)
 \begin{frame}[fragile]{利用信号量实现互斥}
 \begin{columns}[onlytextwidth,T]
 \begin{column}{0.46 \textwidth}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+\begin{minted}{pascal}
 var mutex: semaphore:=1
 
 parbegin
-    process1:begin
-        repeat
-           wait(mutex);
-           critical setion
-           signal(mutex);
-           remainder section
-        until false;
-    end
-\end{lstlisting}
+  process1:begin
+    repeat
+      wait(mutex);
+      critical setion
+      signal(mutex);
+      remainder section
+    until false;
+  end
+\end{minted}
 \end{column}
 \begin{column}{0.46 \textwidth}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, firstnumber=last]
-    process2: begin
-        repeat
-           wait(mutex);
-           critical setion
-           signal(mutex);
-           remainder section
-        until false;
-    end
+\begin{minted}{pascal}
+  process2: begin
+    repeat
+      wait(mutex);
+      critical setion
+      signal(mutex);
+      remainder section
+    until false;
+  end
 parend
-\end{lstlisting}
+\end{minted}
 \end{column}
 \end{columns}
 \end{frame}
@@ -893,86 +903,85 @@ parend
 
 
 \begin{frame}[fragile]{记录型信号量解决生产者—消费者问题}
- \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+ \begin{minted}{pascal}
    var mutex,empty,full:Semaphore:=1,n,0;
-       buffer:array[0,1,…,n-1] of item;
+       buffer:array[0,1,...,n-1] of item;
        in, out: integer: =0,0;
-\end{lstlisting}
+\end{minted}
  
  \begin{columns}[onlytextwidth,T]
  \begin{column}{0.46 \textwidth}
- \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, firstnumber=last, escapechar=|]
- producer: begin
-     repeat
-         …
-         Produce an item in nextp;
-         wait(empty);
-         wait(mutex);
-         buffer(in):=nextp;
-         in:=(in+1) mod n;
-         signal(mutex);
-         signal(full);
-     until false;
- end
- \end{lstlisting}
+ \begin{minted}{pascal}
+producer: begin
+  repeat
+    ...
+    Produce an item in nextp;
+    wait(empty);
+    wait(mutex);
+    buffer(in):=nextp;
+    in:=(in+1) mod n;
+    signal(mutex);
+    signal(full);
+  until false;
+end
+ \end{minted}
  \end{column} 
  \begin{column}{0.46 \textwidth}
- \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, firstnumber=last, escapechar=|]
+ \begin{minted}{pascal}
  consumer:begin
-     repeat
-         wait(full);
-         wait(mutex);
-         nextc:=buffer(out);
-         out:=(out+1) mod n;
-         signal(mutex);
-         signal(empty);
-         Consumer the item in nextc;
-     until false;
+    repeat
+      wait(full);
+      wait(mutex);
+      nextc:=buffer(out);
+      out:=(out+1) mod n;
+      signal(mutex);
+      signal(empty);
+      Consumer the item in nextc;
+    until false;
  end
- \end{lstlisting}
+ \end{minted}
  \end{column}
  \end{columns}
 \end{frame}
 
 
  \begin{frame}[fragile]{利用AND信号量解决生产者—消费者问题}
- \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+ \begin{minted}{pascal}
  var  mutex, empty, full: semaphore:=1,n,0;
-      buffer:array[0,…,n-1] of item;
+      buffer:array[0,...,n-1] of item;
       in out: integer :=0,0;
- \end{lstlisting}
+ \end{minted}
 
  \begin{columns}[onlytextwidth,T]
  \begin{column}{0.46 \textwidth}
- \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, firstnumber=last]
+ \begin{minted}{pascal}
  producer: begin
-     repeat
-         …
-         Produce an item in nextp;
-         Swait(empty, mutex);
-         buffer(in):=nextp;
-         in:=(in+1) mod n;
-         Ssingal(mutex, full);
-     until false;
+    repeat
+      ...
+      Produce an item in nextp;
+      Swait(empty, mutex);
+      buffer(in):=nextp;
+      in:=(in+1) mod n;
+      Ssingal(mutex, full);
+    until false;
  end
- \end{lstlisting}
+ \end{minted}
  \end{column}
  \begin{column}{0.46 \textwidth}
- \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, firstnumber=last]
+ \begin{minted}{pascal}
  consumer:begin
-     repeat
-         Swait(full, mutex);
-         nextc:=buffer(out);
-         out:=(out+1) mod n;
-         Ssignal(mutex, empty);
-         consumer the item in nextc;
-     until false;
+    repeat
+      Swait(full, mutex);
+      nextc:=buffer(out);
+      out:=(out+1) mod n;
+      Ssignal(mutex, empty);
+      consumer the item in nextc;
+    until false;
  end
- \end{lstlisting}
+ \end{minted}
  \end{column}
  \end{columns}
 \end{frame}
-
 
 
 \begin{frame}[fragile]{2.4.2 哲学家进餐问题}
@@ -997,33 +1006,33 @@ parend
 \begin{frame}[fragile]{利用记录型信号量解决哲学家进餐问题}
 第i个哲学家：
 
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
-var chopstick: array[0, …, 4] of semaphore;
+\begin{minted}{pascal}
+var chopstick: array[0, ..., 4] of semaphore;
 repeat
-    wait(chopstick[i]);
-    wait(chopstick[(i+1)mod 5]);
-    …
-   eat
-    …
-   signal(chopstick[i]);
-   signal(chopstick[(i+1)mod 5]);
-    …
-   think;
+  wait(chopstick[i]);
+  wait(chopstick[(i+1)mod 5]);
+  ...
+  eat
+  ...
+  signal(chopstick[i]);
+  signal(chopstick[(i+1)mod 5]);
+  ...
+  think;
 until false
-\end{lstlisting}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{利用AND信号量解决哲学家进餐问题}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
-var chopstick: array[0, …, 4] of semaphore:=(1,1,1,1,1);
+\begin{minted}{pascal}
+var chopstick: array[0, ..., 4] of semaphore:=(1,1,1,1,1);
 processi
-    repeat
-       think;
-       Sswait(chopstick[(i+1) mod 5],chopstick[i]);
-       eat
-       Ssignal(chopstick[(i+1) mod 5],chopstick[i]);
-    until false
-\end{lstlisting}
+  repeat
+    think;
+    Sswait(chopstick[(i+1) mod 5],chopstick[i]);
+    eat
+    Ssignal(chopstick[(i+1) mod 5],chopstick[i]);
+  until false
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{课堂练习}
@@ -1052,16 +1061,16 @@ processi
 
 
 \begin{frame}[fragile]{利用记录型信号量解决读者—写者问题 I}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal, escapechar=|]
+\begin{minted}{pascal}
 var rmutex, wmutex: semaphore: =1,1;
     readcount:integer: =0;
 begin
     parbegin
-\end{lstlisting}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{利用记录型信号量解决读者—写者问题 II}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal,firstnumber=last, escapechar=|]
+\begin{minted}{pascal}
       reader: begin
         repeat
             wait(rmutex);
@@ -1079,7 +1088,7 @@ begin
             signal(rmutex);
        until false;
      end
-\end{lstlisting}
+\end{minted}
 
 % \begin{tikzpicture}[overlay, remember picture]
 %   \draw node[draw, below right=of rwquestion, ellipse] (tip) { 读者如何被唤醒？};
@@ -1089,7 +1098,7 @@ begin
 \end{frame}
 
 \begin{frame}[fragile]{利用记录型信号量解决读者—写者问题 III}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal,firstnumber=last, escapechar=|]
+\begin{minted}{pascal}
      writer: begin
        repeat
            wait(wmutex)
@@ -1099,36 +1108,36 @@ begin
       end
     parend
 end
-\end{lstlisting}
+\end{minted}
 \end{frame}
 
 
 \begin{frame}[fragile, allowframebreaks]{信号量集解决读者—写者问题(略)}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+\begin{minted}{pascal}
 var RN integer;
         L, mx: semaphore: =RN, 1;
  begin
    parbegin
      reader: begin
         repeat
-               swait(L,1,1);
-               swait(mx,1,0);
-                 …
-               perform read operation;
-                 …
-               ssignal(L,1);
+          swait(L,1,1);
+          swait(mx,1,0);
+          ...
+          perform read operation;
+          ...
+          ssignal(L,1);
          until false;
       end
       writer: begin
-         repeat
-               swait(mx,1,1; L,RN,0);
-               perform write operation;
-               ssignal(mx, 1);
-         until flase;
+        repeat
+          swait(mx,1,1; L,RN,0);
+          perform write operation;
+          ssignal(mx, 1);
+        until flase;
       end
     parend
   end
-\end{lstlisting}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{上述方法为读者优先}
@@ -1143,10 +1152,6 @@ var RN integer;
     && (3) 有其它写者，新写者等待
   \end{easylist}
 \end{frame}
-
-
-
-
 
 \begin{frame}[fragile]{读者优先分析}
   \begin{easylist} \easyitem
@@ -1170,49 +1175,49 @@ var RN integer;
 
 
 \begin{frame}[fragile, allowframebreaks]{写者优先(采用类Java/C伪代码)}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=c]
+\begin{minted}{java}
 Semaphore fmutex=1, rdcntmutex=1, wtcntmutex=1, queue=1;
 //fmutex: access to file;
-// rdcntmutex: access to readcount
+//rdcntmutex: access to readcount
 //wtcntmutex: access to writecount
 int readcount = 0, writecount = 0;
 
 void reader(){
-    while(true){
-        wait(queue);
-        wait(rdcntmutex);
-        if(0 == readcount)wait(fmutex);
-        readcount = readcount + 1;
-        signal(rdcntmutex);
-        signal(queue);
+  while(true){
+    wait(queue);
+    wait(rdcntmutex);
+    if(0 == readcount)wait(fmutex);
+    readcount = readcount + 1;
+    signal(rdcntmutex);
+    signal(queue);
 
-        //reading ...
+    //reading ...
 
-        wait(rdcntmutex);
-        readcount = readcount - 1;
-        if(0 == readcount) signal(fmutex);
-        signal(rdcntmutex);
-    }
+    wait(rdcntmutex);
+    readcount = readcount - 1;
+    if(0 == readcount) signal(fmutex);
+    signal(rdcntmutex);
+  }
 }
 
 void writer(){
-    while(true){
-        wait(wtcntmutex);
-        if(0 == writecount)wait(queue);
-        writecount = writecount + 1;
-        signal(wtcntmutex);
+  while(true){
+    wait(wtcntmutex);
+    if(0 == writecount)wait(queue);
+    writecount = writecount + 1;
+    signal(wtcntmutex);
 
-        wait(fmutex);
-        //writing ...
-        signal(fmutex);
+    wait(fmutex);
+    //writing ...
+    signal(fmutex);
 
-        wait(wtcntmutex);
-        writecount = writecount - 1;
-        if(0 == writecount)signal(queue);
-        signal(wtcntmutex);
-    }
+    wait(wtcntmutex);
+    writecount = writecount - 1;
+    if(0 == writecount)signal(queue);
+    signal(wtcntmutex);
+  }
 }
-\end{lstlisting}
+\end{minted}
 \end{frame}
 
 
@@ -1228,34 +1233,34 @@ void writer(){
 \end{frame}
 
 \begin{frame}[fragile, allowframebreaks]{练习答案}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+\begin{minted}{pascal}
 semaphore s, mutexab,mutexba
 integer countab = 0, countba = 0
-pab：
+pab:
     wait(mutexab);
     countab++;
     If countab=1 then wait(s);
     signal(mutexab);
-    …
+    ...
     wait(mutexab);
     countab--;
     if countab=0 then signal(s);
     signal(mutexab);
-\end{lstlisting}
+\end{minted}
 \newpage
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal,firstnumber=last]
+\begin{minted}{pascal}
 pba:
     wait(mutexba);
     countba=countba+1;
     if countba=1 then wait(s);
     signal(mutexba);
     enter;
-    ……
+    ...
     wait(mutexba);
     countba--;
     if countba=0 then signal(s);
     signal(mutexba);
-\end{lstlisting}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{作业讨论}
@@ -1298,7 +1303,7 @@ pba:
 \begin{frame}[fragile]{生产者}
   \begin{columns}[T]
     \column{0.47\textwidth}
-    \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+\begin{minted}{pascal}
 Process A:
 repeat
     wait(SAB)
@@ -1312,9 +1317,10 @@ repeat
 
     siganl(SA)
     signal(S)
-until false \end{lstlisting}
+until false
+\end{minted}
     \column{0.47\textwidth}
-    \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal,firstnumber=last]
+\begin{minted}{pascal}
 Process B
 repeat
     wait(SBA)
@@ -1328,7 +1334,8 @@ repeat
 
     siganl(SB)
     signal(S)
-until false \end{lstlisting}
+until false 
+\end{minted}
   \end{columns}
 \end{frame}
 
@@ -1336,7 +1343,7 @@ until false \end{lstlisting}
 \begin{frame}[fragile]{销售者C}
   \begin{columns}[T]
     \column{0.47\textwidth}
-    \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=c]
+    \begin{minted}{c}
 Repeat
     wait(S)
     if (difference<=-n) { //B卖的太多了
@@ -1350,10 +1357,11 @@ Repeat
         wait(mutex)
         take B
         signal(mutex)
-        difference -= 1  \end{lstlisting}
+        difference -= 1 
+    \end{minted}
 
     \column{0.47\textwidth}
-    \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=c,firstnumber=last]
+    \begin{minted}{c}
     } else{
         wait(mutex)
         take product A or B
@@ -1367,7 +1375,8 @@ Repeat
          }
     }
     Sell product
-until false  \end{lstlisting}
+until false
+  \end{minted}
   \end{columns}
 \end{frame}
 
@@ -1398,7 +1407,7 @@ until false  \end{lstlisting}
 \begin{frame}[fragile]{顾客}
   \begin{columns}[T]
     \column{0.47\textwidth}
-    \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\scriptsize, language=c]
+\begin{minted}{pascal}
 wait(mutex)
 if(count>N){
     signal(mutex)
@@ -1416,11 +1425,11 @@ if(count>N){
         wait(empty)
     }
     ...
-}  \end{lstlisting}
+}  \end{minted}
     \pause
 
     \column{0.47\textwidth}
-    \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=c,firstnumber=last]
+    \begin{minted}{pascal}
 sit on baber_chair
 signal(full)
 wait(cut)
@@ -1432,7 +1441,8 @@ signal(empty)
 wait(mutex)
 count--
 siganl(mutex)
-exit shop  \end{lstlisting}
+exit shop  
+    \end{minted}
   \end{columns}
 \end{frame}
 
@@ -1440,7 +1450,7 @@ exit shop  \end{lstlisting}
 
 
 \begin{frame}[fragile]{理发师}
- \begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=c]
+\begin{minted}{pascal}
 while(true){
     wait(full)
     cut hair
@@ -1448,7 +1458,8 @@ while(true){
     wait(payment)
     accept payment
     signal(recipt)
-} \end{lstlisting}
+} 
+\end{minted}
 \end{frame}
 
 
@@ -1486,18 +1497,17 @@ while(true){
     && 一变量：$count \geqslant n$时满；$\leqslant 0$时空
     && 初始：  in=out=count=0
   \end{easylist}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+\begin{minted}{pascal}
 type producer-consumer=monitor
     var in,out,count：integer;
-    buffer: array [0,…,n-1] of item;
+    buffer: array [0,...,n-1] of item;
     notfull, notempty: condition;
     procedure entry put (item)
     procedure entry get (item)
-\end{lstlisting}
+\end{minted}
 
 \newpage
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small,
-  language=Pascal, firstnumber=last]
+\begin{minted}{pascal}
 Procedure entry put(item)
 	begin
 	  if count >= n then notfull.wait;
@@ -1528,7 +1538,7 @@ consumer: begin
         consume the item in nextc;			
     until false
 end 
-\end{lstlisting}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{PV操作与管程对比}
@@ -1536,13 +1546,18 @@ end
     \column{0.48\textwidth}
       PV操作： 
 
-      ~~(1) 分散式同步机制：共享变量操作，PV操作，分散在整个系统中或各个
-      进程中。 \\
-      ~~(2) 缺点：\\
-      ~~~~(a)可读性差；\\
-      ~~~~(b)正确性不易保证；\\
-      ~~~~(c)不易修改。 \\
-      ~~(3) 优点：高效，灵活。
+      (1) 分散式同步机制：共享变量操作，PV操作，分散在整个系统中或各个
+      进程中。 
+
+      (2) 缺点：
+      
+      (a)可读性差；
+
+      ~~~~(b)正确性不易保证；
+
+      ~~~~(c)不易修改。 
+      
+      (3) 优点：高效，灵活。
     
     \column{0.48\textwidth}
      管程：
@@ -1606,7 +1621,7 @@ end
     && receive(Sender, message)
     && 例：解决生产—消费问题
   \end{easylist}
-\begin{lstlisting}[tabsize=8,keywordstyle=\color{red},basicstyle=\small, language=Pascal]
+\begin{minted}{pascal}
   repeat
        produce an item in nextp;
        ...
@@ -1617,7 +1632,7 @@ end
          ...
          consumer the item in nextc;
    until false;
-\end{lstlisting}
+\end{minted}
 
 \newpage
   \vspace{1cm}
@@ -1695,7 +1710,7 @@ end
 
     & 资源共享(Resource Sharing)
     && 线程是系统独立调度和分派的基本单位，其基本上不拥有系统资源，只有少量资源
-    （寄存器，栈…），但共享其所属进程所拥有的全部资源。
+    （寄存器，栈...），但共享其所属进程所拥有的全部资源。
     
     & 充分利用多核/多处理器的硬件性能
     (Utilization of MP \& Multicore Architectures)
@@ -1884,6 +1899,12 @@ end
   \end{easylist}
 \end{frame}
 
+\begin{frame}[fragile]{附录：GPU}
+
+ 张量处理单元（TPU）是一种定制化的 ASIC 芯片，它由谷歌从头设计，并专门用于机器学习工作负载。TPU 为谷歌的主要产品提供了计算支持，包括翻译、照片、搜索助理和 Gmail 等。
+
+ \includegraphics[width=0.85\textwidth]{figure/TPU.jpg}
+\end{frame}
 
 
 \begin{frame}[fragile]{}
