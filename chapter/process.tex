@@ -576,16 +576,31 @@ if __name__=='__main__':
 \end{frame}
 
 \begin{frame}[fragile]{生产者－消费者问题}
-  \begin{minted}{pascal}
-var n, integer;  //变量定义
+\linespread{1}
+Pascal形式：
+\begin{minted}{pascal}
+var n: integer;  //变量定义
 Type item=...;
 var buffer:array[0,1,...,n-1] of item;
 in, out: 0,1, ... , n-1;
 counter: 0,1, ... , n;
-    \end{minted}
+\end{minted}
+
+Java形式：
+\begin{minted}{java}
+class Item{
+  //anything you want...
+}
+int n;  //变量定义
+Item item;
+Item[] buffer = new Item[n];
+int in, out; //取值范围在 0,1, ... , n-1;
+int counter; //取值范围在 0,1, ... , n;
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{生产者－消费者问题}
+\linespread{1}
   \begin{columns}[onlytextwidth,T]
     \begin{column}{0.48\textwidth}
       \begin{minted}[fontsize=\footnotesize]{pascal}
@@ -624,6 +639,7 @@ consumer:
 \end{frame}
 
 \begin{frame}[fragile]{生产者－消费者问题(2)}
+\linespread{1}
   \begin{easylist} \easyitem
     & 设counter的初值为5
   \end{easylist}
@@ -707,17 +723,18 @@ Until false
 \end{frame}
 
 \begin{frame}[fragile]{2.3.2 信号量机制}
+\linespread{1}
   \begin{easylist} \easyitem
 & 1 整型信号量
 && 是一个整型量，通过2个{\color{red}原子操作}wait(s)和signal(s)来访问。
-&& Wait(s):
+&& wait(s):
 \begin{minted}{pascal}
 while s<= 0 do no-op;
 
 s:=s-1;
 \end{minted}
 
-&& Signal(s):
+&& signal(s):
     \begin{minted}{pascal}
     s:=s+1;
     \end{minted}
@@ -740,7 +757,7 @@ procedure wait(s)
   var s: semaphore
   begin
     s.value:=s.value - 1;
-    if s.value < 0 then block (s, L)
+    if s.value < 0 then block (s.L)
   end
 procedure signal (s)
   var s:semaphone
@@ -768,8 +785,8 @@ procedure signal (s)
 
 \begin{frame}[fragile]{PV操作}
   \begin{easylist} \easyitem
-    & Wait(s): 也用$P(s)$或者$Down(s)$ 表示，相当于申请资源
-    & Signal(s): 也用$V(s)$ 或者$Up(s)$ 表示，相当于释放资源
+    & wait(s): 也用$P(s)$或者$Down(s)$ 表示，相当于申请资源
+    & signal(s): 也用$V(s)$ 或者$Up(s)$ 表示，相当于释放资源
     & 例如：
     && 在公共电话厅打电话
   \end{easylist}
@@ -802,18 +819,23 @@ procedure signal (s)
 
 
 \begin{frame}[fragile]{3 AND型信号量}
+\linespread{1}
 \begin{minted}{pascal}
 Swait(s1,s2,...,sn)
   if s1 >= 1 and ... and sn >= 1 then
     for i:=1 to n do si:=si-1; endfor
   else
-    place the process in the waiting queue with the first si found with si<1, and set the program count of this process to the beginning of swait operation
+    place the process in the waiting queue 
+    with the first si found with si<1, and 
+    set the program count of this process to 
+    the beginning of swait operation
   end if
 
 Ssignal(s1,s2,...,sn)
   for i:=1 to n do si:=si+1;
 
-  remove all the process waiting in the queue associated with si into the ready queue
+  remove all the process waiting in the queue
+   associated with si into the ready queue
  endfor
 \end{minted}
 \end{frame}
@@ -903,6 +925,7 @@ parend
 
 
 \begin{frame}[fragile]{记录型信号量解决生产者—消费者问题}
+\linespread{0.9}
  \begin{minted}{pascal}
    var mutex,empty,full:Semaphore:=1,n,0;
        buffer:array[0,1,...,n-1] of item;
@@ -915,7 +938,7 @@ parend
 producer: begin
   repeat
     ...
-    Produce an item in nextp;
+    Produce nextp;
     wait(empty);
     wait(mutex);
     buffer(in):=nextp;
@@ -936,7 +959,7 @@ end
       out:=(out+1) mod n;
       signal(mutex);
       signal(empty);
-      Consumer the item in nextc;
+      Consumer nextc;
     until false;
  end
  \end{minted}
@@ -946,6 +969,7 @@ end
 
 
  \begin{frame}[fragile]{利用AND信号量解决生产者—消费者问题}
+ \linespread{1}
  \begin{minted}{pascal}
  var  mutex, empty, full: semaphore:=1,n,0;
       buffer:array[0,...,n-1] of item;
@@ -958,7 +982,7 @@ end
  producer: begin
     repeat
       ...
-      Produce an item in nextp;
+      Produce nextp;
       Swait(empty, mutex);
       buffer(in):=nextp;
       in:=(in+1) mod n;
@@ -975,7 +999,7 @@ end
       nextc:=buffer(out);
       out:=(out+1) mod n;
       Ssignal(mutex, empty);
-      consumer the item in nextc;
+      consume nextc;
     until false;
  end
  \end{minted}
@@ -1005,17 +1029,17 @@ end
 
 \begin{frame}[fragile]{利用记录型信号量解决哲学家进餐问题}
 第i个哲学家：
-
+\linespread{1}
 \begin{minted}{pascal}
-var chopstick: array[0, ..., 4] of semaphore;
+var forks: array[0, ..., 4] of semaphore;
 repeat
-  wait(chopstick[i]);
-  wait(chopstick[(i+1)mod 5]);
+  wait(forks[i]);
+  wait(forks[(i+1)mod 5]);
   ...
   eat
   ...
-  signal(chopstick[i]);
-  signal(chopstick[(i+1)mod 5]);
+  signal(forks[i]);
+  signal(forks[(i+1)mod 5]);
   ...
   think;
 until false
@@ -1023,14 +1047,15 @@ until false
 \end{frame}
 
 \begin{frame}[fragile]{利用AND信号量解决哲学家进餐问题}
+\linespread{1}
 \begin{minted}{pascal}
-var chopstick: array[0, ..., 4] of semaphore:=(1,1,1,1,1);
+var forks: array[0, ..., 4] of semaphore:=(1,1,1,1,1);
 processi
   repeat
     think;
-    Sswait(chopstick[(i+1) mod 5],chopstick[i]);
+    Sswait(forks[(i+1) mod 5],forks[i]);
     eat
-    Ssignal(chopstick[(i+1) mod 5],chopstick[i]);
+    Ssignal(forks[(i+1) mod 5],forks[i]);
   until false
 \end{minted}
 \end{frame}
@@ -1040,6 +1065,28 @@ processi
   \begin{easylist} \easyitem
     & 请利用记录型信号量写出一个不会死锁的哲学家进餐问题的算法。
   \end{easylist}
+\end{frame}
+
+\begin{frame}[fragile]{利用记录型信号量解决哲学家进餐问题}
+第i个哲学家：
+\linespread{1}
+\begin{minted}{pascal}
+var forks: array[0, ..., 4] of semaphore;
+var counter: semaphore = 4
+repeat
+  wait(counter)
+  wait(forks[i]);
+  wait(forks[(i+1)mod 5]);
+  ...
+  eat
+  ...
+  signal(forks[i]);
+  signal(forks[(i+1)mod 5]);
+  signal(counter)
+  ...
+  think;
+until false
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{2.4.3 读者—写者问题}
@@ -1070,6 +1117,7 @@ begin
 \end{frame}
 
 \begin{frame}[fragile]{利用记录型信号量解决读者—写者问题 II}
+\linespread{1}
 \begin{minted}{pascal}
       reader: begin
         repeat
@@ -1098,6 +1146,7 @@ begin
 \end{frame}
 
 \begin{frame}[fragile]{利用记录型信号量解决读者—写者问题 III}
+\linespread{1}
 \begin{minted}{pascal}
      writer: begin
        repeat
@@ -1113,6 +1162,7 @@ end
 
 
 \begin{frame}[fragile, allowframebreaks]{信号量集解决读者—写者问题(略)}
+\linespread{1}
 \begin{minted}{pascal}
 var RN integer;
         L, mx: semaphore: =RN, 1;
@@ -1175,6 +1225,7 @@ var RN integer;
 
 
 \begin{frame}[fragile, allowframebreaks]{写者优先(采用类Java/C伪代码)}
+\linespread{1}
 \begin{minted}{java}
 Semaphore fmutex=1, rdcntmutex=1, wtcntmutex=1, queue=1;
 //fmutex: access to file;
@@ -1233,6 +1284,7 @@ void writer(){
 \end{frame}
 
 \begin{frame}[fragile, allowframebreaks]{练习答案}
+\linespread{1}
 \begin{minted}{pascal}
 semaphore s, mutexab,mutexba
 integer countab = 0, countba = 0
@@ -1301,6 +1353,7 @@ pba:
 
 
 \begin{frame}[fragile]{生产者}
+\linespread{1}
   \begin{columns}[T]
     \column{0.47\textwidth}
 \begin{minted}{pascal}
@@ -1341,6 +1394,7 @@ until false
 
 
 \begin{frame}[fragile]{销售者C}
+\linespread{1}
   \begin{columns}[T]
     \column{0.47\textwidth}
     \begin{minted}{c}
@@ -1380,6 +1434,14 @@ until false
   \end{columns}
 \end{frame}
 
+\begin{frame}[fragile]{思考}
+  \begin{easylist} \easyitem
+    & difference是一个整数类型的变量，需不需要加互斥信号量对其实施互斥访问。
+    && 注意一个进程和一类进程的差异。
+    && 多个进程对同一资源进行访问时，才需要保护。
+  \end{easylist}
+\end{frame}
+
 
 \begin{frame}[fragile]{练习（嗜睡的理发师问题）}
   \begin{easylist} \easyitem
@@ -1405,6 +1467,7 @@ until false
 \end{frame}
 
 \begin{frame}[fragile]{顾客}
+\linespread{1}
   \begin{columns}[T]
     \column{0.47\textwidth}
 \begin{minted}{pascal}
@@ -1450,6 +1513,7 @@ exit shop
 
 
 \begin{frame}[fragile]{理发师}
+\linespread{1}
 \begin{minted}{pascal}
 while(true){
     wait(full)
@@ -1497,6 +1561,7 @@ while(true){
     && 一变量：$count \geqslant n$时满；$\leqslant 0$时空
     && 初始：  in=out=count=0
   \end{easylist}
+  \linespread{1}
 \begin{minted}{pascal}
 type producer-consumer=monitor
     var in,out,count：integer;
@@ -1508,6 +1573,7 @@ type producer-consumer=monitor
 
 \newpage
 \begin{minted}{pascal}
+\linespread{1}
 Procedure entry put(item)
 	begin
 	  if count >= n then notfull.wait;
@@ -1621,6 +1687,7 @@ end
     && receive(Sender, message)
     && 例：解决生产—消费问题
   \end{easylist}
+  \linespread{1}
 \begin{minted}{pascal}
   repeat
        produce an item in nextp;
@@ -1881,17 +1948,17 @@ end
 
 
 
-\begin{frame}[fragile]{本章作业及延伸阅读}
+\begin{frame}[fragile]{本章延伸阅读}
   \begin{easylist} \easyitem
-    & 作业：操作系统同步之信号量机制
+    & 操作系统同步之信号量机制
 
     根据文章介绍，实现并进行体验。https://zhuanlan.zhihu.com/p/34410587
 
-    要求：以Markdown格式交作业，包括但不限于以下部分：
+    % 要求：以Markdown格式交作业，包括但不限于以下部分：
 
-    && 整个测试流程及代码
-    && 心得体会
-    && 个人信息
+    % && 整个测试流程及代码
+    % && 心得体会
+    % && 个人信息
 
     & 阅读（不用交）：关于现代CPU，程序员应当更新的知识:
 
